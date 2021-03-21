@@ -1,4 +1,4 @@
-asgiref @ file:///tmp/build/80754af9/asgiref_1594338739818/work
+asgiref==3.2.10
 Django==3.0.3
 django-appconf==1.0.4
 django-classy-tags==2.0.0
@@ -11,14 +11,14 @@ djangocms-owl==0.1.11
 gunicorn==20.0.4
 Keras==2.4.3
 Keras-Preprocessing==1.1.2
-nltk @ file:///tmp/build/80754af9/nltk_1592496090529/work
+nltk 
 numpy==1.19.5
-pandas @ file:///C:/ci/pandas_1592833613419/work
+pandas 
 pandocfilters==1.4.2
-Pillow @ file:///C:/ci/pillow_1594298230227/work
+Pillow==7.2.0
 pytz==2020.1
 scikit-image==0.16.2
-scikit-learn @ file:///C:/ci/scikit-learn_1592853510272/work
+scikit-learn 
 sqlparse==0.3.1
 tensorboard==2.4.1
 tensorboard-plugin-wit==1.8.0
