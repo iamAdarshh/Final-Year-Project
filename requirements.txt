@@ -23,7 +23,6 @@ tensorboard==2.4.1
 tensorboard-plugin-wit==1.8.0
 tensorflow==2.4.1
 tensorflow-estimator==2.4.0
-tensorflow-gpu==2.4.0
 tmdbsimple==2.7.0
 tmdbv3api==1.7.4
 whitenoise==5.2.0
