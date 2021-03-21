@@ -1,1 +1,1 @@
-web: gunicorn RHub.wsgi --log-file -
+web: gunicorn Rhub.wsgi --log-file -
