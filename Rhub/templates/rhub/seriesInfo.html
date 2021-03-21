@@ -1,0 +1,308 @@
+{% extends 'rhub/base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+        <a href="{% url 'home' %}" class="breadcrumbs__link">Home</a>
+    </li>
+    <li class="breadcrumbs__item">
+        <a href="{% url 'series' %}" class="breadcrumbs__link">Series</a>
+    </li>
+    <li class="breadcrumbs__item">
+        <a href="" class="breadcrumbs__link--active">{{data.title}}</a>
+    </li>
+</ul>
+    <div class="container container-body">
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="movie-poster">
+                    <img src="https://image.tmdb.org/t/p/w500/{{data.poster}}" alt="">
+                </div>
+            </div>
+            <div class="col-md-8 col-sm-6 mt-4">
+                <h2>{{ data.title }}</h2>
+                <p id="des"> {{data.description}} </p>
+                
+                <h4>First Air Date : {{data.release_date}}</h4>
+                {% if data.votes == 0 %}
+                    <h4>This Series is not yet Rated.</h4>
+                {% else %}
+                <h4>Rating: {{ data.votes }}%</h4>
+                <div class="progress" style="height:20px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{data.votes}}%;" aria-valuemin="0" aria-valuemax="100">Positive</div>
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{data.negative}}%;" aria-valuemin="0" aria-valuemax="100">Negative</div>
+                </div>
+                {% endif %}
+            </div>
+            
+        </div>
+        {% if user.is_authenticated %}
+        {% if data.check == False %}
+        <div class="row">
+            <div class="col-12">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="review-form row">
+                        <div class="form-field col-8 col-md-6">
+                            <input class="input-text" type="text" name="review" id="review">
+                            <label class="label" for="review">review</label>
+                        </div>
+                        <div class="form-field col-4 col-md-6">
+                            <input class="submit-btn" type="submit" name="" id="" value="Submit">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        {% else %}
+        <p class="text-white">You haved already reviewed for this movie.</p>
+        {% endif %}
+        {% endif %}
+        <div class="row">
+            <div class="col-12">
+                <div id="accordion">
+                    <!-- Card 1 -->
+                    <div class="card">
+                        <div class="card-header" role="tab" id="overviewhead">
+                            <h3 class="mb-0">
+                                <a data-toggle="collapse" data-target="#overview">Overview</a>
+                            </h3>
+                        </div>
+                        <div class="collapse show card-body-data" id="overview" data-parent="#accordion">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="ml-2 mr-2">{{ data.tagline }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="ml-2">Status</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="mr-2">{{ data.status }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="ml-2">Type</p>
+                                </div>
+                                <div class="col-6">
+                                    <p>{{data.type}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="ml-2">Language</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="mr-2">
+                                    {% for language in data.languages %}
+                                        {{ language }}
+                                    {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="ml-2">Created By</p>
+                                </div>
+                                <div class="col-6">
+                                    <ul>
+                                        {% for creator in data.created_by %}
+                                            <li> <img src="https://image.tmdb.org/t/p/w200/{{creator.photo}}" alt="" width="50px"> {{ creator.name }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="ml-2 mr-2">Seasons & Episode List</p>
+                                </div>
+                                <div class="col-12">
+                                    <table class="table table-dark">
+                                        <thead>
+                                            <th>Poster</th>
+                                            <th>Season</th>
+                                            <th>Episodes</th>
+                                            <th>Release Date</th>
+                                        </thead>
+                                        <tbody>
+                                            {% for season in data.seasons %}
+                                                <tr>
+                                                    <td><img src="https://image.tmdb.org/t/p/w200/{{season.poster_path}}" alt="" width="50px"></td>
+                                                    <td>{{season.name}}</td>
+                                                    <td>{{season.episode_count}}</td>
+                                                    <td>{{season.air_date}}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="ml-2">Runtime</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="mr-2">
+                                    {% for time in data.runtime %}
+                                    {{ time }}
+                                    {% endfor %} 
+                                    minutes
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="ml-2">Homepage</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="mr-2"><a href="{{ data.homepage }}"></a></p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="ml-2">Networks</p>
+                                </div>
+                                <div class="col-6">
+                                    <ul>
+                                        {% for network in data.networks %}
+                                           <li> <img src="https://image.tmdb.org/t/p/w200/{{ network.logo }}" alt="" width="50px"> {{network.name}} </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="ml-2">Country</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="mr-2">
+                                    {% for c in data.country %}
+                                    {{ c }}
+                                    {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="card">
+                        <div class="card-header" role="tab" id="reviewhead">
+                            <h3 class="mb-0">
+                                <a class="collapsed" data-toggle="collapse" data-target="#userreview">Reviews</a>
+                            </h3>
+                        </div>
+                        <div class="collapse card-body-data" id="userreview" data-parent="#accordion">
+                            {% if data.userReview %}
+                                <div>
+                                    <table class="table table-dark table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Review</th>
+                                                <th>Date</th>
+                                                <th>User</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for review in data.userReview %}
+                                            <tr>
+                                                <td>{{review.review}}</td>
+                                                <td>{{review.date}}</td>
+                                                <td>{{review.userid}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                No Reviews Yet
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="card">
+                        <div class="card-header" role="tab" id="casthead">
+                            <h3 class="mb-0">
+                                <a class="collapsed" data-toggle="collapse" data-target="#cast">Cast & Crew</a>
+                            </h3>
+                        </div>
+                        <div class="collapse card-body-data" id="cast" data-parent="#accordion">
+                            
+                            <table class="table table-dark table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="bg-success" colspan="3">Actors</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Real Name</th>
+                                        <th scope="col">Character Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for actor in data.cast %}
+                                    <tr>
+                                        <td> <img src="https://image.tmdb.org/t/p/w200/{{actor.photo}}" alt="" width="100px"> </td>
+                                        <td> {{actor.original_name}} </td>
+                                        <td> {{actor.character}} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="bg-success" colspan="3">Crew</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Real Name</th>
+                                        <th scope="col">Department</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for c in data.crew %}
+                                    <tr>
+                                        <td> <img src="https://image.tmdb.org/t/p/w200/{{c.photo}}" alt="" width="100px"> </td>
+                                        <td> {{c.name}} </td>
+                                        <td> {{c.department}} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="card">
+                        <div class="card-header" role="tab" id="mediahead">
+                            <h3 class="mb-0">
+                                <a class="collapsed" data-toggle="collapse" data-target="#media">Media</a>
+                            </h3>
+                        </div>
+                        <div class="collapse card-body-data" id="media" data-parent="#accordion">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="trailer" > 
+                                        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{data.trailer}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock content %}

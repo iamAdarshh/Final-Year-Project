@@ -1,0 +1,103 @@
+{% extends 'rhub/base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+        <a href="{% url 'home' %}" class="breadcrumbs__link">Home</a>
+    </li>
+    <li class="breadcrumbs__item">
+        <a href="" class="breadcrumbs__link--active">Profile</a>
+    </li>
+</ul>
+    {% if user.is_authenticated %}
+    <div class="container container-body">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-white">User Profile</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p class="text-white" >Name</p> 
+            </div>
+            <div class="col-6">
+                <p class="text-white">{{user.first_name}} {{user.last_name}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p class="text-white" >Username</p> 
+            </div>
+            <div class="col-6">
+                <p class="text-white">{{user.username}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p class="text-white">Email</p>
+            </div>
+            <div class="col-6">
+                <p class="text-white">{{user.email}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p class="text-white">Review Point</p>
+            </div>
+            <div class="col-6">
+                <p class="text-white">{{data.count}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p class="text-white">Level</p>
+            </div>
+            <div class="col-6">
+                <p class="text-white">{{data.level}}</p>
+            </div>
+        </div>
+        <div>
+            <table class="table table-dark">
+                <thead>
+                    <tr style="background-color:#5cb85c;">
+                        <th colspan="4">Your Reviews</th>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Movie/Series</th>
+                        <th>Review</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for review in data.reviews %}
+                    <tr>
+                        <td>
+                            {% if review.type == 'movie' %}
+                            <a href="{% url 'singleMovie' review.id %}">
+                                <img src="https://image.tmdb.org/t/p/w200/{{review.poster}}" alt="" width="100px">
+                            </a>
+                            {% else %}
+                            <a href="{% url 'singleSeries' review.id %}">
+                                <img src="https://image.tmdb.org/t/p/w200/{{review.poster}}" alt="" width="100px">
+                            </a>
+                            {% endif %}
+                        </td>
+                        <td>{{ review.movieName }}</td>
+                        <td>{{review.review}}</td>
+                        <td>{{review.date}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 50px;"></div>
+
+    </div>
+    {% else %}
+        <div><h1>Loggin First</h1></div>
+    {% endif %}
+
+
+{% endblock content %}

@@ -1,0 +1,51 @@
+{% extends 'rhub/base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+        <a href="{% url 'home' %}" class="breadcrumbs__link">Home</a>
+    </li>
+    <li class="breadcrumbs__item">
+        <a href="" class="breadcrumbs__link--active">About</a>
+    </li>
+</ul>
+    <div class="container container-body">
+
+        <div class="row mb-4">
+            <div class="col-12 col-md-6">
+                <h1>My AIM</h1>
+            </div>
+            <div class="col-12 col-md-6">
+                <p class="text-white">My aim was to create a place, where people can express there emotions about movies and series, and generate real rating about them.</p>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12 col-md-6">
+                <h1>Features</h1>
+            </div>
+            <div class="col-12 col-md-6">
+                <ul>
+                    <li class="text-white">Recommended System</li>
+                    <li class="text-white">Sentiment Analysis</li>
+                </ul>
+            </div>
+        </div>
+        <div col="row mt-5">
+            <div class="col-12">
+                <img src="{% static 'images/tmdb_logo2.svg' %}" alt="">
+            </div>
+        </div>
+        <div class="mb-4"></div>
+        <div class="row mt-3 mb-4">
+            <div class="col-md-6 col-12">
+                
+                <h1>What is TMDB API?</h1>
+            </div>
+            <div class="col-md-6 col-12">
+                <p class="text-white">The API service is for those of you interested in using our movie, TV show or actor images and/or data in your application. Our API is a system we provide for you and your team to programmatically fetch and use our data and/or images.</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

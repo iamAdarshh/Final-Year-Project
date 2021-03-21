@@ -1,0 +1,156 @@
+{% extends 'rhub/base.html' %}
+{% load static %}
+{% block content %}
+<br>
+    <ul class="breadcrumbs">
+        <li class="breadcrumbs__item">
+            <a href="" class="breadcrumbs__link--active">Home</a>
+        </li>
+    </ul>
+    
+    <br>
+    <section id="section1">
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row row-header">
+                    <div class="col-12 col-sm-6">
+                        <h1>Review Hub</h1>
+                        <p>where your sentiment matters.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <hr>
+    </section>
+    <section id="section2">
+        <h1> Upcoming Movies </h1>
+        <div class="latest_movies_section">
+            <div class="owl-carousel owl-theme">
+                {% for key, movie in upcoming_movies.items %}
+                <div class="item">
+                    <a href="{% url 'singleMovie' movie.id %}"><img src="https://image.tmdb.org/t/p/w500/{{movie.poster}}" alt=""></a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+    </section>
+    <section id="section2">
+        <h1> Top rated Series </h1>
+        <div class="latest_movies_section">
+            <div class="owl-carousel owl-theme">
+                {% for key, series in top_series.items %}
+                <div class="item">
+                    <a href="{% url 'singleSeries' series.id %}"><img src="https://image.tmdb.org/t/p/w500/{{series.poster}}" alt=""></a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+    </section>
+    <section id="section2">
+        <h1> Latest Movies </h1>
+        <div class="latest_movies_section">
+            <div class="owl-carousel owl-theme">
+                {% for key, movie in latest_movies.items %}
+                <div class="item">
+                    <a href="{% url 'singleMovie' movie.id %}"><img src="https://image.tmdb.org/t/p/w500/{{movie.poster}}" alt=""></a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+    </section>
+    <section id="section3">
+        
+        <h1> Latest Series </h1>
+        <div class="latest_movies_section">
+            <div class="owl-carousel owl-theme">
+                {% for key, series in latest_series.items %}
+                <div class="item">
+                    <a href="{% url 'singleSeries' series.id %}">
+                        <img src="https://image.tmdb.org/t/p/w500/{{series.poster}}" alt="">
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+    </section>
+    <section class="section4">
+        <h1 class="title"> Feedback Form</h1>
+        <div class="container">
+            {{ form.errors }}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="feedback-form row">
+                    <div class="form-field col-lg-6">
+                        {{form.name}}
+                        <label for="name" class="label">Name</label>
+                    </div>
+                    <div class="form-field col-lg-6">
+                        {{form.email}}
+                        <label for="email" class="label">Email</label>
+                    </div>
+                    <div class="form-field col-lg-6">
+                        {{form.contact}}
+                        <label for="phoen" class="label">Contact Number</label>
+                    </div>
+                    <div class="form-field col-lg-6">
+                        {{form.subject}}
+                        <label for="message" class="label">Subject</label>
+                    </div>
+                    <div class="form-field col-lg-12">
+                        {{form.message}}
+                        <label for="message" class="label">Message</label>
+                    </div>
+                    <div class="form-field col-lg-6">
+                        <input class="submit-btn" type="submit" value="submit" name="">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        const prevIcon = '<img src="H:\Final Year Project\Project\server\static\images\left-arrow.svg" alt="prev">'
+        const nextIcon = '<img src="H:\Final Year Project\Project\server\static\images\right-arrow.svg" alt="next">'
+
+        $('.owl-carousel').owlCarousel({
+            loop:false,
+            margin:10,
+            nav:true,
+            navText: [
+                'prev',
+                'next'
+            ],
+            responsive:{
+                0:{
+                items:1
+                },
+                600:{
+                items:3
+                },
+                1000:{
+                items:5
+                }
+            }
+        })
+    </script>
+    <script>
+        //Query All input fields
+        var form_fields = document.getElementsByTagName('input')
+        form_fields[1].id = "name";
+        form_fields[2].id="email";
+        form_fields[3].id = "contact";
+        form_fields[4].id = "subject";
+        form_fields[5].id = "message";
+
+        form_fields[1].className = 'input-text'
+        form_fields[2].className = 'input-text'
+        form_fields[3].className = 'input-text'
+        form_fields[4].className = 'input-text'
+        form_fields[5].className = 'input-text'
+    </script>
+{% endblock content %}

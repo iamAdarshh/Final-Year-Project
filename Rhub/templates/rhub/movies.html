@@ -1,0 +1,71 @@
+{% extends 'rhub/base.html' %}
+{% load static %}
+{% block content %}
+<br>
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+        <a href="{% url 'home' %}" class="breadcrumbs__link">Home</a>
+    </li>
+    <li class="breadcrumbs__item">
+        <a href="" class="breadcrumbs__link--active">Movies</a>
+    </li>
+</ul>
+<form action="" method="POST">
+{% csrf_token %}
+<div class="container container-body">
+    <div class="container search-bar">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" name="search" value="{{query}}">
+                <div class="input-group-btn">
+                    <button class="btn btn-success" type="submit" name="submit-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+    </div>
+
+    <hr>
+    <!-- Movie 1-->
+    {% if data_movies %}
+    <div class="row">
+        {% for key, movie in data_movies.items %}
+            <div class="col-md-4 movie-grid">
+                <div class="image">
+                    <a href="{% url 'singleMovie' movie.id %}">
+                        <img src="https://image.tmdb.org/t/p/w500/{{movie.poster}}" alt="" class="w-100">
+                        <div class="overlay">
+                            <div class="detail">{{movie.overview}}</div>
+                     </div>
+                    </a>
+                </div>
+                <h4 class="text-center">{{movie.title}}</h4>
+                <h5 class="text-center">Rate {{movie.vote}}</h5>
+                <a href="#" class="btn btn-success review">Review</a>
+            </div>
+        {% endfor %}
+    <!-- Movie 1 End -->
+
+    </div>
+
+    <br>
+    <div class="row row-button mt-2">
+            <input type="text" value="{{page}}" name="page" hidden>
+                {% if page == 1 %}
+                <button class="btn btn-lg btn-secondary ml-auto" name="prev" disabled>Prev</button>
+                {% else %}
+                <button class="btn btn-lg btn-secondary ml-auto" name="prev">Prev</button>
+                {% endif %}
+                {% if page == total_pages %}
+                <button class="btn btn-lg btn-success ml-1 mr-auto" name="next" disabled>Next</button>
+                {% else %}
+                <button class="btn btn-lg btn-success ml-1 mr-auto" name="next" >Next</button>
+                {% endif %}
+    </div>
+    {% else %}
+        <h1 class="text-white">No results Found</h1>
+    {% endif %}
+    <br>
+
+    </div>
+</form>
+{% endblock content %}
