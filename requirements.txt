@@ -224,7 +224,6 @@ tensorflow-gpu==2.4.0
 termcolor==1.1.0
 terminado==0.8.3
 testpath==0.4.4
-textblob==0.15.3
 threadpoolctl @ file:///tmp/tmp9twdgx9k/threadpoolctl-2.1.0-py3-none-any.whl
 tmdbsimple==2.7.0
 tmdbv3api==1.7.4
